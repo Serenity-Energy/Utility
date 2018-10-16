@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<!--[if lt IE 9 ]><html class="no-js oldie" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Glint</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="js/modernizr.js"></script>
+    <script src="js/pace.min.js"></script>
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+
+<body id="top">
+
+    <header class="s-header">
+
+       
+        <nav class="header-nav">
+
+            <a href="#0" class="header-nav__close" title="close"><span>Close</span></a>
+
+            <div class="header-nav__content">
+                <h3>Navigation</h3>
+                
+                <ul class="header-nav__list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="wallet.html">Wallet</a></li>
+                    <li class="current"><a href="buy.html">Buy</a></li>
+                    <li><a href="sell.html">Sell</a></li>
+                    <li><a href="support.html">Support</a></li>
+                </ul>
+            </div> <!-- end header-nav__content -->
+
+        </nav>  <!-- end header-nav -->
+
+        <a class="header-menu-toggle" href="#0">
+            <span class="header-menu-text">Menu</span>
+            <span class="header-menu-icon"></span>
+        </a>
+
+    </header> <!-- end s-header -->
+
+
+
+    <!-- contact
+    ================================================== -->
+    <section id="contact" class="s-contact">
+
+        <div class="overlay"></div>
+        <div class="contact__line"></div>
+
+        <div class="row section-header" data-aos="fade-up">
+            
+        </div>
+
+        <div class="row contact-content" data-aos="fade-up">
+            
+            <div class="contact-primary">
+                <h3 class="h6">Buy Electricity</h3>
+
+                <form name="contactForm" id="contactForm" method="post" action="" novalidate="novalidate">
+                    <fieldset>
+    
+                     <div>
+                        <label for="walletInput" style="color: white;">Please select your Wallet</label>
+                            <div class="cl-custom-select">
+                                <select class="full-width" id="walletInput">
+                                    <option style="color:black;" value="0x893206af4fee54f473bd0ca5ff07b3ab2f1a59ec">Sample Wallet #1</option>
+                                    <option style="color:black;" value="0xc76bbb56b18541cd6f1bd164bb083f1efe51819e">Sample Wallet #2</option>
+                                    <option style="color:black;" value="0x9a351962d2a32bad82c1703990342f76ec57de39">Sample Wallet #3</option>
+                                </select>
+                            </div>
+                    </div>
+                    <a onclick="checkme()" class="btn" id="checkbalance">Check Balance</a>
+                    <br /><br />
+                    <img id="loading" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
+                    <div id="balanceshow" class="col-full">
+                        <h3 class="subhead">Available Tokens: </h3>
+                    </div>
+
+                    <div class="form-field">
+                            Value in Energy Units<input onkeyup="mytion()" name="killoWatt" type="number" id="killoWattID" placeholder="" value="" minlength="2" required="" aria-required="true" class="full-width">
+                    </div>
+                    <a class="btn" onclick="tion()" id="buttonbutton" >Update</a>
+                    <br /><br />
+                    <div class="form-field">
+                            Tokens Debited<input name="tokens" type="number" id="tokenID" placeholder="" value="" required="" disabled="true" class="full-width" aria-required="true">
+                    </div>
+                    <div class="form-field">
+                        <a onclick="buy()" class="btn btn--primary full-width">Buy</a>
+                        <div class="submit-loader">
+                            <div class="text-loader">Sending...</div>
+                            <div class="s-loader">
+                                <div class="bounce1"></div>
+                                <div class="bounce2"></div>
+                                <div class="bounce3"></div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    </fieldset>
+                </form>
+            </div> <!-- end contact-primary -->
+            <br /><br />
+            <div class="contact-secondary">
+                <div class="contact-info">
+
+                    <h3 class="h6 hide-on-fullwidth"></h3>
+
+                    <div class="cinfo">
+                        <h5>Current Market Rate</h5>
+                        <p>
+                            1 Token = $ 4.9<br>
+                        </p>
+                    </div>
+
+                    <div class="cinfo">
+                        <h5>Electricity Market Rate</h5>
+                        <p>
+                            10 Token = 5 Energy Units<br>
+                        </p>
+                    </div>
+
+                   
+                </div> <!-- end contact-info -->
+            </div> <!-- end contact-secondary -->
+
+        </div> <!-- end contact-content -->
+
+    </section> <!-- end s-contact -->
+
+
+  
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader">
+            <div class="line-scale-pulse-out">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        document.getElementById("killoWattID").addEventListener("focus", tion);
+        function mytion()
+        {
+            document.getElementById("tokenID").value = 0;
+        }
+        function tion()
+        {
+            var x = document.getElementById("killoWattID").value
+            x = x * 2;
+            document.getElementById("tokenID").value = x;
+        }
+            
+    </script>
+
+
+    <script>
+        if (typeof web3 !== 'undefined') 
+		{
+			web3 = new Web3(web3.currentProvider);
+		} 
+      else 
+        {
+        	// set the provider you want from Web3.providers
+        	web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        }
+
+		
+        var serenitycont = web3.eth.contract([
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "Burn",
+		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_spender",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "approve",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_spender",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			},
+			{
+				"name": "_extraData",
+				"type": "bytes"
+			}
+		],
+		"name": "approveAndCall",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "burn",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "burnFrom",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_seller",
+				"type": "address"
+			},
+			{
+				"name": "_buyer",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			},
+			{
+				"name": "_market",
+				"type": "uint256"
+			}
+		],
+		"name": "transaction",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "Transfer",
+		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "transferFrom",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "initialSupply",
+				"type": "uint256"
+			},
+			{
+				"name": "tokenName",
+				"type": "string"
+			},
+			{
+				"name": "tokenSymbol",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			},
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "allowance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "decimals",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "symbol",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "totalSupply",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "Watts",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "x",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+
+
+    var addcont = serenitycont.at('0x80300bbfdd01b667135472742d8a8150b5bb28ab');
+    console.log(addcont);
+    function checkme()
+    {
+            addcont.balanceOf($("#walletInput").val(),function(err,res){
+            if(!err){
+                $("#balanceshow").show();
+                $("#balanceshow").html("<h5>Available Tokens: </h5>" + res.c[0] + "<br /><br /><br />");
+            }
+            else{
+                console.log(err);
+            }
+        });
+    }
+    
+    function buy(){
+        addcont.transaction ('0xc76bbb56b18541cd6f1bd164bb083f1efe51819e', $("#walletInput").val(), $("#killoWattID").val(), 2,{to:'0x80300bbfdd01b667135472742d8a8150b5bb28ab', from:'0x9a351962d2a32bad82c1703990342f76ec57de39'},function(err,res){
+            if(!err){
+                alert("success");
+            }
+            else{
+                console.log(err);
+            }
+        });
+    }
+
+    </script>
+</body>
+
+</html>

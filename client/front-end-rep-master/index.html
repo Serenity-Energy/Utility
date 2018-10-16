@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!--[if lt IE 9 ]><html class="no-js oldie" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Glint</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="js/modernizr.js"></script>
+    <script src="js/pace.min.js"></script>
+    
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+
+<body id="top">
+
+    <!-- header
+    ================================================== -->
+    <header class="s-header">
+
+        <div class="header-logo">
+            <a class="site-logo" href="index.html">
+                <img src="images/serenity_source.png" alt="Homepage">
+            </a>
+        </div>
+
+        <nav class="header-nav">
+
+            <a href="#0" class="header-nav__close" title="close"><span>Close</span></a>
+
+            <div class="header-nav__content">
+                <h3>Navigation</h3>
+                
+                <ul class="header-nav__list">
+                    <li class="current"><a href="index.html">Home</a></li>
+                    <li><a href="wallet.html">Wallet</a></li>
+                    <li><a href="buy.html">Buy</a></li>
+                    <li><a href="sell.html">Sell</a></li>
+                    <li><a href="support.html">Support</a></li>
+                </ul>
+            </div> <!-- end header-nav__content -->
+
+        </nav>  <!-- end header-nav -->
+
+        <a class="header-menu-toggle" href="#0">
+            <span class="header-menu-text">Menu</span>
+            <span class="header-menu-icon"></span>
+        </a>
+
+    </header> <!-- end s-header -->
+
+
+    <!-- home
+    ================================================== -->
+    <section id="home" class="s-home target-section" style="background-color:white;" data-parallax="scroll" data-image-src="" data-natural-width=3000 data-natural-height=2000 data-position-y=center>
+
+        <div class="overlay"></div>
+        <div class="shadow-overlay"></div>
+
+        <div class="home-content">
+                
+            <div class="row home-content__main">
+                    <div class="row" style="padding: 0 0 0 73px;">
+                            
+                            <div id="gg2" class="col-md-4 gauge" style="width:400px; height:320px;"></div>
+                    </div>
+            </div>
+
+        
+        
+
+
+        <div class="row about-stats stats block-1-4 block-m-1-2 block-mob-full" data-aos="fade-up">
+                
+            <div class="col-block stats__col ">
+                <div class="stats__count">220</div>
+                <h5>Voltage</h5>
+                <h1 style="color:black;">V</h1>
+            </div>
+            <div class="col-block stats__col">
+                <div class="stats__count">120</div>
+                <h5>Current</h5>
+                <h1 style="color:black;">A</h1>
+            </div>
+            <div class="col-block stats__col">
+                <div class="stats__count">109</div>
+                <h5>Active Power</h5>
+                <h1 style="color:black;">kW</h1>
+            </div>
+            <div class="col-block stats__col">
+                <div class="stats__count">102</div>
+                <h5>Frequency</h5>
+                <h1 style="color:black;">Hz</h1>
+            </div>
+
+            
+            
+        </div> <!-- end about-stats -->
+
+
+        <div class="row" style="padding: 0 0 0 40px;">
+                <div id="gg1" class="col-block gauge" style="width:300px; height:220px;"></div>
+                <div id="gg3" class="col-block gauge" style="width:300px; height:220px;"></div>
+        </div>
+
+        
+
+
+        <script src="js/raphael-2.1.4.min.js"></script>
+        <script src="js/justgage.js"></script>
+        <script>
+            var g = new JustGage({
+            id: "gg1",
+            value: 0,
+            min: 0,
+            max: 100,
+            title: "Import kWh"
+            });
+            var g = new JustGage({
+            id: "gg2",
+            value: 67,
+            min: 0,
+            max: 500,
+            title: "Total kWh"
+            });
+            var g = new JustGage({
+            id: "gg3",
+            value: 0,
+            min: 0,
+            max: 100,
+            title: "Export kWh"
+            });
+        </script>
+
+
+            <div class="home-content__line"></div>
+
+        </div> <!-- end home-content -->
+
+
+       
+        <!-- end home-social -->
+
+    </section> <!-- end s-home -->
+
+
+    <!-- about
+    ================================================== -->
+
+    <!-- services
+    ================================================== -->
+    
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader">
+            <div class="line-scale-pulse-out">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
