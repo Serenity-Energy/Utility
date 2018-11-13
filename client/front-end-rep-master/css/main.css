@@ -1683,6 +1683,42 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     padding-left: 12px;
 }
 
+.token-text {
+    display: block;
+    position: absolute;
+    top: 0;
+    padding-left: 12px;
+}
+
+.token-menu {
+    position: absolute;
+    right: 38px;
+    top: 104px;
+    height: 42px;
+    width: auto;
+    line-height: 42px;
+    font-family: "montserrat-medium", sans-serif;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: .3rem;
+    color: #FFFFFF;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    background-color: #000000;
+}
+
+.token-menu.opaque {
+    background-color: #000000;
+}
+
+.token-menu .token-text {
+    background-color: #000000;
+}
+
+.token-menu.opaque .token-text {
+    background-color: #000000;
+}
+
 .header-menu-icon {
     display: block;
     width: 22px;
@@ -3606,5 +3642,12 @@ footer .row {
     }
 }
 
+#loading{
+    width: 100px;
+    display: none;
+}
 
+#balanceshow{
+    display: none;
+}
 /*# sourceMappingURL=main.css.map */
