@@ -41,13 +41,13 @@
 
 <body id="top" onload="checkactive(), checkupperlimit()">
 
-    <!-- header
-    ================================================== -->
+   
     <header class="s-header">
 
         <div class="header-logo">
-            <a class="site-logo" href="/">
-                <img src="{{ url_for('static', filename='images/serenity_source.png') }}" alt="Homepage">
+			<a class="site-logo" href="/">
+				<br /><br />
+                <img src="{{ url_for('static', filename='images/serenitysource123.png') }}" alt="Homepage" style="height: 175px; width: auto;">
             </a>
         </div>
 
@@ -65,20 +65,16 @@
 					<li><a href="/registeruser">Add User</a></li>
 					<li><a href="/update">Update User Status</a></li>
                 </ul>
-            </div> <!-- end header-nav__content -->
-
-        </nav>  <!-- end header-nav -->
-
+            </div> 
+        </nav>
         <a class="header-menu-toggle" href="#0">
             <span class="header-menu-text">Menu</span>
             <span class="header-menu-icon"></span>
         </a>
 
-    </header> <!-- end s-header -->
+    </header>
 
-
-    <!-- home
-    ================================================== -->
+    <!-- Home -->
     <section id="home" class="s-home target-section" style="background-color:white;" data-parallax="scroll" data-image-src="" data-natural-width=3000 data-natural-height=2000 data-position-y=center>
 
         <div class="overlay"></div>
@@ -119,7 +115,7 @@
                     <br />
                 </div>
                 <div class="col-three">
-                        <a onclick="offDemand()" class="btn btn--primary full-width">Turn Demand Off</a>
+                        <a onclick="offDemand()" class="btn btn--primary full-width">Turn Demand Off</a> 
                 </div>
             </div> 
 
@@ -134,10 +130,11 @@
                 <div id="current" style="font-size: 8rem; font-family: montserrat-bold, sans-serif; color: white;">{{batCap}}</div>
                 <h5>Batteries Capacity</h5>
             </div>
-        </div> <!-- end about-stats -->
+        </div> 
 
 		<br />
 
+		<!-- Recent History -->
         <div class="row">
             <div class="col-twelve">
                 <br /><br />
@@ -171,20 +168,10 @@
         </div>
         <div class="home-content__line"></div>
 
-        </div> <!-- end home-content -->
+        </div>
+    </section>
 
 
-       
-        <!-- end home-social -->
-
-    </section> <!-- end s-home -->
-
-
-    <!-- about
-    ================================================== -->
-
-    <!-- services
-    ================================================== -->
     
     <!-- preloader
     ================================================== -->
@@ -220,22 +207,45 @@
         	web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
         }
 	
-		var hash = '0xb2eb4a7edc83dea2ea188b57249437d3503711ad'; //contract address
-		var vwallet = '0x6e79Fa441794F4af12a1831E9647E20E22035AD9'; //virtual wallet
+		var hash = '0x44c37ef4e7aae871ef4fdc234066b9c7e5d901e5'; //smart contract address
+		var vwallet = '0x6e79Fa441794F4af12a1831E9647E20E22035AD9'; //sample virtual wallet
 
         var serenitycont = web3.eth.contract([
 	{
-		"constant": true,
-		"inputs": [],
-		"name": "name",
+		"constant": false,
+		"inputs": [
+			{
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"name": "tokens",
+				"type": "uint256"
+			}
+		],
+		"name": "approve",
 		"outputs": [
 			{
-				"name": "",
-				"type": "string"
+				"name": "success",
+				"type": "bool"
 			}
 		],
 		"payable": false,
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "offDemand",
+		"outputs": [
+			{
+				"name": "status",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -250,30 +260,7 @@
 				"type": "uint256"
 			}
 		],
-		"name": "SC_IncreaseSupply",
-		"outputs": [
-			{
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "spender",
-				"type": "address"
-			},
-			{
-				"name": "tokens",
-				"type": "uint256"
-			}
-		],
-		"name": "approve",
+		"name": "SC_addtopup",
 		"outputs": [
 			{
 				"name": "success",
@@ -319,19 +306,34 @@
 		"constant": false,
 		"inputs": [
 			{
-				"name": "from",
+				"name": "hepekID",
 				"type": "address"
-			},
-			{
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"name": "tokens",
-				"type": "uint256"
 			}
 		],
-		"name": "transferFrom",
+		"name": "SC_channeloff",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_user",
+				"type": "address"
+			},
+			{
+				"name": "status",
+				"type": "bool"
+			}
+		],
+		"name": "SC_UpdateUserStatus",
 		"outputs": [
 			{
 				"name": "success",
@@ -352,202 +354,6 @@
 		],
 		"name": "SC_useTokens",
 		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "upper_limit",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "demand",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [],
-		"name": "offDemand",
-		"outputs": [
-			{
-				"name": "status",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "high_treshold",
-				"type": "uint256"
-			}
-		],
-		"name": "UpdateDemand",
-		"outputs": [
-			{
-				"name": "status",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "tokenOwner",
-				"type": "address"
-			}
-		],
-		"name": "balanceOf",
-		"outputs": [
-			{
-				"name": "balance",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "totalsupply",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [],
-		"name": "acceptOwnership",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"name": "energy_reading",
-				"type": "uint256"
-			}
-		],
-		"name": "SC_Consumer",
-		"outputs": [
-			{
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "toggle",
-				"type": "address"
-			}
-		],
-		"name": "SC_getTokenStatus",
-		"outputs": [
-			{
-				"name": "status",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "symbol",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"name": "energy_reading",
-				"type": "uint256"
-			}
-		],
-		"name": "SC_Generator",
-		"outputs": [
-			{
-				"name": "success",
-				"type": "bool"
-			}
-		],
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -576,72 +382,22 @@
 		"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "tokenOwner",
-				"type": "address"
-			}
-		],
-		"name": "SC_GetBalance",
-		"outputs": [
-			{
-				"name": "balance",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "userlist",
-		"outputs": [
-			{
-				"name": "name",
-				"type": "string"
-			},
-			{
-				"name": "usertype",
-				"type": "uint256"
-			},
-			{
-				"name": "activestate",
-				"type": "bool"
-			},
-			{
-				"name": "useraddress",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"constant": false,
 		"inputs": [
 			{
-				"name": "spender",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"name": "to",
 				"type": "address"
 			},
 			{
 				"name": "tokens",
 				"type": "uint256"
-			},
-			{
-				"name": "data",
-				"type": "bytes"
 			}
 		],
-		"name": "approveAndCall",
+		"name": "transferFrom",
 		"outputs": [
 			{
 				"name": "success",
@@ -650,180 +406,20 @@
 		],
 		"payable": false,
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "newOwner",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"constant": false,
 		"inputs": [
 			{
-				"name": "_user",
-				"type": "address"
-			},
-			{
-				"name": "status",
-				"type": "bool"
+				"name": "high_treshold",
+				"type": "uint256"
 			}
 		],
-		"name": "SC_UpdateUserStatus",
-		"outputs": [
-			{
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "SC_getDemandStatus",
+		"name": "UpdateDemand",
 		"outputs": [
 			{
 				"name": "status",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "tokenAddress",
-				"type": "address"
-			},
-			{
-				"name": "tokens",
-				"type": "uint256"
-			}
-		],
-		"name": "transferAnyERC20Token",
-		"outputs": [
-			{
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "tokenOwner",
-				"type": "address"
-			},
-			{
-				"name": "spender",
-				"type": "address"
-			}
-		],
-		"name": "allowance",
-		"outputs": [
-			{
-				"name": "remaining",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"name": "tokens",
-				"type": "uint256"
-			}
-		],
-		"name": "SC_DecreaseSupply",
-		"outputs": [
-			{
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "SC_returnlimit",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"name": "energy_readingIN",
-				"type": "uint256"
-			},
-			{
-				"name": "energy_readingOUT",
-				"type": "uint256"
-			},
-			{
-				"name": "batteryLevel",
-				"type": "uint256"
-			}
-		],
-		"name": "SC_Prosumer",
-		"outputs": [
-			{
-				"name": "success",
 				"type": "bool"
 			}
 		],
@@ -846,17 +442,12 @@
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": true,
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"name": "_to",
-				"type": "address"
+				"indexed": false,
+				"name": "tokens",
+				"type": "uint256"
 			}
 		],
-		"name": "OwnershipTransferred",
+		"name": "update_launch",
 		"type": "event"
 	},
 	{
@@ -926,13 +517,232 @@
 		],
 		"name": "Alert_Treshold",
 		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "tokenOwner",
+				"type": "address"
+			},
+			{
+				"name": "spender",
+				"type": "address"
+			}
+		],
+		"name": "allowance",
+		"outputs": [
+			{
+				"name": "remaining",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "tokenOwner",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"name": "balance",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "demand",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "hepekID",
+				"type": "address"
+			}
+		],
+		"name": "SC_checkuser",
+		"outputs": [
+			{
+				"name": "condition",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "SC_getDemandStatus",
+		"outputs": [
+			{
+				"name": "status",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "toggle",
+				"type": "address"
+			}
+		],
+		"name": "SC_getTokenStatus",
+		"outputs": [
+			{
+				"name": "status",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "SC_returnlimit",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "symbol",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "totalsupply",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "upper_limit",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "userlist",
+		"outputs": [
+			{
+				"name": "channel",
+				"type": "bool"
+			},
+			{
+				"name": "last_topup",
+				"type": "uint256"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "usertype",
+				"type": "uint256"
+			},
+			{
+				"name": "activestate",
+				"type": "bool"
+			},
+			{
+				"name": "useraddress",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	}
 ]);
 
 
-    var addcont = serenitycont.at(hash);
+    var addcont = serenitycont.at(hash);	//connecting Smart Contract ABI with its valid hash
     console.log(addcont);
-    function checkactive()
+
+    //Checks status of demand state
+	function checkactive()
     {
             addcont.demand(function(err,res){
             if(!err)
@@ -948,6 +758,8 @@
         });
     }
 
+
+	//Receives upper limit value from smart contract
 	function checkupperlimit()
     {
             addcont.SC_returnlimit(function(err,res){
@@ -965,6 +777,8 @@
         });
     }
 
+
+	//Turns off demand state
 	function offDemand(){
         addcont.offDemand ({to:hash, from:vwallet},function(err,res){
             if(!err){

@@ -8,7 +8,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-  #return render_template("index.html" , current=current, activep=activep, frequency=freq, voltage=voltage, totalk=dds238_total, importk=dds238_import, exportk=dds238_export)
   return render_template("index.html", gridCap=0.0, batCap=0.0)
 		
 @app.route('/demand')

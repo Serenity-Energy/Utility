@@ -42,20 +42,24 @@ contract ERC20Interface {
     function approve(address spender, uint tokens) public returns (bool success);
     function transferFrom(address from, address to, uint tokens) public returns (bool success);
     
-    function SC_IncreaseSupply(address to, uint topup) public returns (bool success);
-    function SC_DecreaseSupply(address _from, uint tokens) public returns (bool success);
-    function SC_GetBalance(address tokenOwner) public constant returns (uint balance);
+    function SC_UpdateUserStatus(address _user, bool status) public returns (bool success);
+    function SC_adduser(address hepekID, string userID, uint utype, uint tokenbalance) public returns (bool success);
     
-    function SC_Consumer(address _from, uint energy_reading) public returns (bool success);
+    function SC_addtopup(address to, uint topup) public returns (bool success);
     
-    function SC_Prosumer(address _from, uint energy_readingIN, uint energy_readingOUT, uint batteryLevel) public returns (bool success);
+    
     function UpdateDemand(uint high_treshold) public returns (bool status);
     function offDemand() public returns (bool status);
     function SC_useTokens(address toggle) public;
     function SC_getTokenStatus(address toggle) public view returns (bool status);
+    function SC_getDemandStatus() public view returns (bool status);
+    function SC_returnlimit() public view returns (uint);
     
-    function SC_Generator(address _from, uint energy_reading) public returns (bool success);
     
+    function SC_channeloff(address hepekID) public returns (bool success);
+
+    function SC_checkuser(address hepekID) public view returns (bool condition);
+
 
     event Transfer(address indexed from, address indexed to, uint tokens);
     event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
@@ -65,52 +69,24 @@ contract ERC20Interface {
 }
 
 
-// ----------------------------------------------------------------------------
-// Contract function to receive approval and execute function in one call
-//
-// Borrowed from MiniMeToken
-// ----------------------------------------------------------------------------
-contract ApproveAndCallFallBack {
-    function receiveApproval(address from, uint256 tokens, address token, bytes data) public;
-}
 
-
-// ----------------------------------------------------------------------------
-// Owned contract
-// ----------------------------------------------------------------------------
-contract Owned {
-    address public owner;
-    address public newOwner;
-
-    event OwnershipTransferred(address indexed _from, address indexed _to);
-
-    constructor() public {
-        owner = 0x202a062c9fc9ed80cfa2e2e69e94f6b5f14bf0c2;
-    }
-
-    modifier onlyOwner {
-        require(msg.sender == owner);
-        _;
-    }
-
-    function transferOwnership(address _newOwner) public onlyOwner {
-        newOwner = _newOwner;
-    }
-    function acceptOwnership() public {
-        require(msg.sender == newOwner);
-        emit OwnershipTransferred(owner, newOwner);
-        owner = newOwner;
-        newOwner = address(0);
-    }
-}
 
 
 // ----------------------------------------------------------------------------
 // ERC20 Token, with the addition of symbol, name and decimals and a
 // fixed supply
 // ----------------------------------------------------------------------------
-contract FixedSupplyToken is ERC20Interface, Owned {
+contract FixedSupplyToken is ERC20Interface {
     using SafeMath for uint;
+
+    struct user{
+        bool channel;
+        uint last_topup;
+        string name;
+        uint usertype;
+        bool activestate;
+        address useraddress;
+    }
 
     string public symbol;
     string public  name;
@@ -119,12 +95,14 @@ contract FixedSupplyToken is ERC20Interface, Owned {
     uint private counter;
     uint public totalsupply;
     mapping(address => bool) useTokens;
-    mapping(address => uint) lastReadingIN;
-    mapping(address => uint) lastReadingOUT;
+
     mapping(address => uint) balances;
-    mapping(address => uint) capacity;
+    
     mapping(address => mapping(address => uint)) allowed;
 
+    mapping(address => user) public userlist;
+
+    event update_launch(uint tokens);
     
     // ------------------------------------------------------------------------
     // Constructor
@@ -137,28 +115,68 @@ contract FixedSupplyToken is ERC20Interface, Owned {
         totalsupply = 0;
     }
     
-    // ------------------------------------------------------------------------
-    // Get Balance
-    // ------------------------------------------------------------------------
-    function SC_GetBalance(address tokenOwner) public view returns (uint balance) {
-        return balances[tokenOwner];
-    }
     
     // ------------------------------------------------------------------------
-    // Decrease Supply
+    // Returning upper limit
     // ------------------------------------------------------------------------
-    function SC_DecreaseSupply(address _from, uint tokens) public returns (bool success) {
-        balances[_from] = balances[_from] - tokens;
-        totalsupply = totalsupply - tokens;
+    function SC_returnlimit() public view returns (uint)
+    {
+        return upper_limit;
+    }
+    
+    
+    // ------------------------------------------------------------------------
+    // Add User
+    // ------------------------------------------------------------------------
+    function SC_adduser(address hepekID, string userID, uint utype,uint tokenbalance) public returns (bool success)
+    {
+        userlist[hepekID].useraddress = hepekID;
+        userlist[hepekID].name = userID;
+        userlist[hepekID].usertype = utype;
+        userlist[hepekID].last_topup = tokenbalance;
+        userlist[hepekID].channel = true;
+        balances[hepekID] = tokenbalance;
+        userlist[hepekID].activestate = true;
+        return true;
+    }
+    
+    function SC_UpdateUserStatus(address _user, bool status) public returns (bool success)
+    {
+        userlist[_user].activestate = status;
         return true;
     }
     
     // ------------------------------------------------------------------------
-    // Increase Supply
+    // Channel Off function
     // ------------------------------------------------------------------------
-    function SC_IncreaseSupply(address to, uint topup) public returns (bool success) {
+    function SC_channeloff(address hepekID) public returns (bool success)
+    {
+        userlist[hepekID].channel = false;
+        return true;
+    }
+    
+    // ------------------------------------------------------------------------
+    // Check User Status
+    // ------------------------------------------------------------------------
+    function SC_checkuser(address hepekID) public view returns (bool condition)
+    {
+        if(userlist[hepekID].activestate == true || userlist[hepekID].useraddress == hepekID){
+            return true;
+        }
+        return userlist[hepekID].activestate;
+    }
+    
+    
+    
+    // ------------------------------------------------------------------------
+    // Add Topup in user's account
+    // ------------------------------------------------------------------------
+    function SC_addtopup(address to, uint topup) public returns (bool success) 
+    {
         balances[to] = balances[to] + topup;
-        totalsupply = totalsupply + topup;
+        userlist[to].channel = true;
+        userlist[to].last_topup = topup;
+        emit update_launch(topup);
         return true;
     }
     
@@ -186,116 +204,28 @@ contract FixedSupplyToken is ERC20Interface, Owned {
     }
     
     // ------------------------------------------------------------------------
-    // Consumer
+    // Get Demand Status
     // ------------------------------------------------------------------------
-    function SC_Consumer(address _from, uint energy_reading) public returns (bool success)
+    function SC_getDemandStatus() public view returns (bool status)
     {
-        if (energy_reading > lastReadingIN[_from])
-        {
-            SC_DecreaseSupply(_from, energy_reading - lastReadingIN[_from]);
-            lastReadingIN[_from] = energy_reading;
-        }
-        
-        if (balances[_from] < 10)
-        {
-            emit Alert_Treshold(balances[_from]);
-        }
-        if (balances[_from] == 0)
-        {
-            emit Low_Treshold(balances[_from]);
-        }
-        return true;
+        return demand;
     }
-
-    // ------------------------------------------------------------------------
-    // Prosumer
-    // ------------------------------------------------------------------------
-    function SC_Prosumer(address _from, uint energy_readingIN, uint energy_readingOUT, uint batteryLevel) public returns (bool success) 
-    {
-        if (demand == true && useTokens[_from] == true)
-        {
-            if (counter < upper_limit)
-            {
-                if(energy_readingIN > lastReadingIN[_from] || energy_readingOUT > lastReadingOUT[_from])
-                {
-                    if((energy_readingIN - lastReadingIN[_from]) < (energy_readingOUT - lastReadingOUT[_from]))
-                    {
-                        SC_IncreaseSupply(_from, (energy_readingOUT - lastReadingOUT[_from]) - (energy_readingIN - lastReadingIN[_from]));
-                        counter = counter + (energy_readingOUT - lastReadingOUT[_from]);
-                    }
-                    else if((energy_readingIN - lastReadingIN[_from]) > (energy_readingOUT - lastReadingOUT[_from]))
-                    {
-                        SC_DecreaseSupply(_from, (energy_readingIN - lastReadingIN[_from]) - (energy_readingOUT - lastReadingOUT[_from]));
-                        counter = counter + (energy_readingOUT - lastReadingOUT[_from]);
-                    }
-                    
-                    lastReadingIN[_from] = energy_readingIN;
-                    lastReadingOUT[_from] = energy_readingOUT;
-                }
-            }
-        }
-        else if(useTokens[_from] == true)
-        {
-           SC_Consumer(_from, energy_readingIN);
-           return true;
-        }
-        else if(demand == true)
-        {
-            if (counter < upper_limit)
-            {
-               if (energy_readingOUT > lastReadingOUT[_from])
-                {
-                    SC_IncreaseSupply(_from, energy_readingOUT - lastReadingOUT[_from]);
-                    counter = counter + (energy_readingOUT - lastReadingOUT[_from]);
-                    lastReadingOUT[_from] = energy_readingOUT;
-                }
-            }
-        }
-        if (balances[_from] < 10)
-        {
-           emit Alert_Treshold(balances[_from]);
-        }
-        if (balances[_from] == 0)
-        {
-           emit Low_Treshold(balances[_from]);
-        }
-        capacity[_from] = batteryLevel;
-        return true;
-    }
-
-    // ------------------------------------------------------------------------
-    // Pure Generator
-    // ------------------------------------------------------------------------
-    function SC_Generator(address _from, uint energy_reading) public returns (bool success)
-    {
-        if (counter < upper_limit)
-        {
-            if (energy_reading > lastReadingOUT[_from])
-            {
-                SC_IncreaseSupply(_from, energy_reading - lastReadingOUT[_from]);
-                counter = counter + (energy_reading - lastReadingOUT[_from]);
-                lastReadingOUT[_from] = energy_reading;
-            }
-            return true;
-        }
-    }
-
+    
+    
+    
 
     // ------------------------------------------------------------------------
     // Demand Event Update
     // ------------------------------------------------------------------------
     function UpdateDemand(uint high_treshold) public returns (bool status)
     {
-        if (msg.sender == owner)
+        if(demand == false)
         {
-            if(demand == false)
-            {
-                demand = true;
-            }
-            upper_limit = high_treshold;
-            return demand;
+            demand = true;
         }
+        upper_limit = high_treshold;
         counter = 0;
+        return demand;
     }
     
     // ------------------------------------------------------------------------
@@ -303,22 +233,21 @@ contract FixedSupplyToken is ERC20Interface, Owned {
     // ------------------------------------------------------------------------
     function offDemand() public returns (bool status)
     {
-        if (msg.sender == owner)
+        if(demand == true)
         {
-            if(demand == true)
-            {
-                demand = false;
-            }
-            return demand;
+            demand = false;
         }
+        upper_limit = 0;
         counter = 0;
+        return demand;
     }
     
     
     // ------------------------------------------------------------------------
     // Get the token balance for account `tokenOwner`
     // ------------------------------------------------------------------------
-    function balanceOf(address tokenOwner) public view returns (uint balance) {
+    function balanceOf(address tokenOwner) public view returns (uint balance) 
+    {
         return balances[tokenOwner];
     }
 
@@ -328,7 +257,8 @@ contract FixedSupplyToken is ERC20Interface, Owned {
     // - Owner's account must have sufficient balance to transfer
     // - 0 value transfers are allowed
     // ------------------------------------------------------------------------
-    function transfer(address to, uint tokens) public returns (bool success) {
+    function transfer(address to, uint tokens) public returns (bool success) 
+    {
         balances[msg.sender] = balances[msg.sender].sub(tokens);
         balances[to] = balances[to].add(tokens);
         emit Transfer(msg.sender, to, tokens);
@@ -344,7 +274,8 @@ contract FixedSupplyToken is ERC20Interface, Owned {
     // recommends that there are no checks for the approval double-spend attack
     // as this should be implemented in user interfaces 
     // ------------------------------------------------------------------------
-    function approve(address spender, uint tokens) public returns (bool success) {
+    function approve(address spender, uint tokens) public returns (bool success) 
+    {
         allowed[msg.sender][spender] = tokens;
         emit Approval(msg.sender, spender, tokens);
         return true;
@@ -377,20 +308,6 @@ contract FixedSupplyToken is ERC20Interface, Owned {
         return allowed[tokenOwner][spender];
     }
 
-
-    // ------------------------------------------------------------------------
-    // Token owner can approve for `spender` to transferFrom(...) `tokens`
-    // from the token owner's account. The `spender` contract function
-    // `receiveApproval(...)` is then executed
-    // ------------------------------------------------------------------------
-    function approveAndCall(address spender, uint tokens, bytes data) public returns (bool success) {
-        allowed[msg.sender][spender] = tokens;
-        emit Approval(msg.sender, spender, tokens);
-        ApproveAndCallFallBack(spender).receiveApproval(msg.sender, tokens, this, data);
-        return true;
-    }
-
-
     // ------------------------------------------------------------------------
     // Don't accept ETH
     // ------------------------------------------------------------------------
@@ -399,10 +316,4 @@ contract FixedSupplyToken is ERC20Interface, Owned {
     }
 
 
-    // ------------------------------------------------------------------------
-    // Owner can transfer out any accidentally sent ERC20 tokens
-    // ------------------------------------------------------------------------
-    function transferAnyERC20Token(address tokenAddress, uint tokens) public onlyOwner returns (bool success) {
-        return ERC20Interface(tokenAddress).transfer(owner, tokens);
-    }
 }
