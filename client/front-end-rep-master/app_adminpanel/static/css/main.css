@@ -59,7 +59,7 @@
  * # base style overrides
  *
  * ------------------------------------------------------------------- */
-html {
+ html {
     font-size: 10px;
 }
 
@@ -503,7 +503,7 @@ form,
 }
 
 .pace .pace-progress {
-    background: #e10717;
+    background: #8a9dc3;
     position: fixed;
     z-index: 900;
     top: 0;
@@ -546,7 +546,7 @@ form,
 }
 
 .line-scale-pulse-out > div {
-    background-color: #e10717;
+    background-color: #8a9dc3;
     width: 4px;
     height: 35px;
     border-radius: 2px;
@@ -833,8 +833,8 @@ button.btn--primary,
 input[type="submit"].btn--primary,
 input[type="reset"].btn--primary,
 input[type="button"].btn--primary {
-    background: #e10717;
-    border-color: #e10717;
+    background: #3a5997;
+    border-color: #3a5997;
     color: #FFFFFF;
 }
 
@@ -848,8 +848,8 @@ button.btn--primary:focus,
 input[type="submit"].btn--primary:focus,
 input[type="reset"].btn--primary:focus,
 input[type="button"].btn--primary:focus {
-    background: #e10717;
-    border-color: #e10717;
+    background: #3a5997;
+    border-color: #3a5997;
 }
 
 
@@ -1247,7 +1247,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     line-height: 1.333;
     text-transform: uppercase;
     letter-spacing: .25rem;
-    color: #e10717;
+    color: #8a9dc3;
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -1514,7 +1514,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     letter-spacing: .25rem;
     margin-bottom: 4.8rem;
     margin-top: .9rem;
-    color: #e10717;
+    color: #8a9dc3;
 }
 
 .header-nav p {
@@ -1652,7 +1652,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     font-size: 1.3rem;
     text-transform: uppercase;
     letter-spacing: .3rem;
-    color: #e10717;
+    color: #8a9dc3;
     -webkit-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
     background-color: #000000;
@@ -1902,8 +1902,8 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 }
 
 .home-content__scroll a::before {
-    border-bottom: 2px solid #e10717;
-    border-right: 2px solid #e10717;
+    border-bottom: 2px solid #8a9dc3;
+    border-right: 2px solid #8a9dc3;
     content: '';
     display: block;
     height: 8px;
@@ -1927,7 +1927,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     display: block;
     width: 2px;
     height: 10.2rem;
-    background-color: #e10717;
+    background-color: #8a9dc3;
     position: absolute;
     right: 7.2rem;
     bottom: 0;
@@ -2243,7 +2243,7 @@ html.no-csstransitions .home-content__main {
 .s-about {
     padding-top: 16.2rem;
     padding-bottom: 9rem;
-    background-color: #e10717;
+    background-color: #8a9dc3;
     color: #010507;
     position: relative;
 }
@@ -3017,7 +3017,7 @@ html.no-csstransitions .home-content__main {
     padding: 0 2rem;
     margin: 0;
     color: #FFFFFF;
-    background: #e10717;
+    background: #8a9dc3;
 }
 
 .s-contact .form-field label::after {
@@ -3028,14 +3028,14 @@ html.no-csstransitions .home-content__main {
     margin-top: -6px;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
-    border-right: 5px solid #e10717;
+    border-right: 5px solid #8a9dc3;
 }
 
 .contact__line {
     display: block;
     width: 2px;
     height: 20.4rem;
-    background-color: #e10717;
+    background-color: #3a5997;
     position: absolute;
     left: 50%;
     top: -10.2rem;
@@ -3062,7 +3062,7 @@ html.no-csstransitions .home-content__main {
 
 .contact-content h5 {
     margin-top: 0;
-    color: #e10717;
+    color: #8a9dc3;
 }
 
 .contact-content input[type="email"],
@@ -3089,7 +3089,7 @@ html.no-csstransitions .home-content__main {
 .contact-content textarea:focus,
 .contact-content select:focus {
     color: #FFFFFF;
-    border-bottom: 1px solid #e10717;
+    border-bottom: 1px solid #8a9dc3;
 }
 
 .contact-content button,
