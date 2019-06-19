@@ -5,7 +5,6 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-
 @app.route("/")
 def main():
   return render_template("index.html", gridCap=0.0, batCap=0.0)
