@@ -71,6 +71,6 @@ Case 3: Generator Mode
 Generator is commercial member running solar/wind farm and producing renewable energy only.
 For such a members DEMAND will be always active, solar produced energy will be exported to the grid.
 
-Smart Contract creates ERGON tokens and updates generator’s wallet.
+Smart Contract creates ERGON token and updates generator’s wallet.
 
 
