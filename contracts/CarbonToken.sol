@@ -35,7 +35,7 @@ contract TokenERC621 {
     function transferFrom( address from, address to, uint value) returns (bool ok);
     function approve(address spender, uint value) returns (bool ok);
 
-    // Admin only functions
+    // Administrator only functions
     function increaseSupply(uint value, address to) returns (bool ok);
     function decreaseSupply(uint value, address from) returns (bool ok);
 
