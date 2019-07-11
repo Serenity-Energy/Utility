@@ -3,7 +3,7 @@ Energy Utility and Carbon Credits
 
 MIT License
 
-Copyright (c) [2018] [Cerenity Source]
+Copyright (c) [2018] [Serenity Source]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
