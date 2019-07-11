@@ -1,3 +1,4 @@
+Document
 
 Serenity is developing Smart Energy Broker HEPEK, IoT device, secure smart energy meter and blockchain-enabled gateway, which empowers prosumers, generators and consumers to become part of Serenity decentralized community. 
 
