@@ -1,4 +1,5 @@
 CONCEPT
+=======
 
 The project is going to be designed on the true foundations of immutable and decentralized peer to peer ledger which people can trust and use for energy trade, and carbon credit rewards accounting. Here we find the real purpose of block chain which is the basis of trust for asset trade (energy/electricity/carbon) and financial transactions. Smarts contracts can keep all the promises defined by mutual interests of the prosumers, consumers, and energy retailer. This will involve making up the internet of smart meters running smart contacts and blockchain maintaining the mutual consensus
 .
